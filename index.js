@@ -1,7 +1,7 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer') // HERE
-const route = require('./routes/route.js');
+const route = require('./src/routes/route.js');
 
 const app = express();
 
@@ -14,7 +14,7 @@ const mongoose = require('mongoose')
 
 
 
-mongoose.connect("mongodb+srv://AartiZare:aartizare@cluster0.l0uzu.mongodb.net/Suraj-Db?retryWrites=true&w=majority", { useNewUrlParser: true })
+mongoose.connect("mongodb+srv://ideaUsher:6pvCA1UL9XGi9MBU@cluster0.wkhbje0.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true })
     .then(() => console.log('mongodb Rock n Roll on 3000'))
     .catch(err => console.log(err))
    

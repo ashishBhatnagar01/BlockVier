@@ -67,26 +67,59 @@ const registerMenu = async function (req, res) {
     }
 }
 
+const getAllMenu = async function (req, res) {
+    try {
 
+        let menu = await menuModel.find();
+        // console.log(menu)
+        let arr=[]
+        for(let i=0;i<menu.length;i++){
+            if(menu[i].root==0){
+                let obj={
+                    itemId:menu[i].itemId,
+                    itemName:menu[i].itemsName,
+                    url:menu[i].url,
+                    root:menu[i].root
+                }
+                let child= await menuModel.find({root:menu[i].itemId})
+                // if(child.length>0){
+                //     for(let j=0;j<child.length;j++){
+                //         console.log("--------------------------------")
+                //         child[j].itemId="hello"
+                //         // console.log(child[j].itemId)
+                //     }
+                // }
+                // console.log(child)
+                obj.child=child
+                // obj.subChild="Hello"
+                // if(obj.child.length>0){
 
+                //     // for(let j=0;j<obj.child.length;j++){
 
-    const getAllMenu = async function (req, res) {
-        try {
-    
-            let Menu = await menuModel.find();
-            for(let i=0;i<Menu.length;i++){
-                console.log(Menu[i])
-              let data =  await menuModel.findOne({itemId:1});
-              if(data!==null){
-                  return  Menu.push(data);
-                  
-              }
+                //     //     console.log("-------------------")
+                //     //     // obj.child[j].subChild="HEllo"
+                //     //     console.log(obj.child[j])
+                //     // }
+                // }
+
+                // console.log(obj)
+                arr.push(obj)
             }
-            res.status(200).send({ status: true, message: "Menu list", data: Menu })
         }
-        catch (error) {
-            console.log(error)
-            res.status(500).send({ status: false, error: error.message });
-        }
+        // for(let i=0;i<Menu.length;i++){
+        //     console.log(Menu[i])
+        //   let data =  await menuModel.find();
+        //   console.lo
+        //   if(data!==null){
+        //       return  Menu.push(data);
+              
+        //   }
+        // }
+        res.status(200).send({ status: true, message: "Menu list", data: arr})
     }
-    module.exports = {registerMenu,getAllMenu}
+    catch (error) {
+        console.log(error)
+        res.status(500).send({ status: false, error: error.message });
+    }
+}
+module.exports = {registerMenu,getAllMenu}
